@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.csablk.muse.document.Song;
+import com.csablk.muse.dto.SongListResponse;
 import com.csablk.muse.dto.SongRequest;
 import com.csablk.muse.repository.SongRepository;
 
@@ -47,5 +48,16 @@ public class SongService {
         int seconds = (int)(durationSeconds % 60);
         
         return String.format("%d:%02d", minutes, seconds); 
+    }
+
+    public SongListResponse getAllSongs() {
+        return new SongListResponse(true, songRepository.findAll());
+    }
+
+    public Boolean removeSong(String id) {
+        Song existingSong = songRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Song not found"));
+        songRepository.delete(existingSong);
+        return true;
     }
 }

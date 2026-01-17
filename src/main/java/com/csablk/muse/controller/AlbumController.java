@@ -35,7 +35,7 @@ public class AlbumController {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(albumService.addAlbum(albumRequest));
-
+            
         } catch (Exception e) {
             return ResponseEntity
                     .badRequest()
