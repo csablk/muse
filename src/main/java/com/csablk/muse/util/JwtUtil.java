@@ -55,17 +55,16 @@ public class JwtUtil {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-            .verifyWith(getSigningKey())
-            .build()
-            .parseSignedClaims(token)
-            .getPayload();
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     public boolean validateToken(String jwtToken, UserDetails userDetails) {
         final String email = extractEmail(jwtToken);
         return email.equals(userDetails.getUsername()) && !isTokenExpired(jwtToken);
     }
-
 
     private boolean isTokenExpired(String jwtToken) {
         return extractExpiration(jwtToken).before(new Date());
